@@ -19,7 +19,7 @@ var message = {
       '• Fungicides with protectant and curative properties are used against early blight on potato. Protectant fungicides such as mancozeb and chlorothalonil areused as the foundation of most early blight management programs \n\n • These fungicides must be reapplied every 7-10 days to provide protection of new growth as well as to counter the effects of weathering which progressively removes the chemical from the leaf surface.',
   'Late Blight':
       '• Use systemic fungicides, such as dimethomorph, cymoxanil, fluopicolide and propamacarb. Continue fungicide applications at 7- to 10-day intervals as conditions require. Shorter intervals may be needed under cool, rainy conditions.\n\n • Late blight is controlled by eliminating cull piles and volunteer potatoes, using proper harvesting and storage practices, and applying fungicides when necessary.',
-  'Bacterial Spots':
+  'Bacterial Spot':
       '• Copper sprays can be used to control bacterial leaf spot, but they are not as effective when used alone on a continuous basis. Thus, combining these sprays with a plant resistance inducer, such as Regalia or Actigard, can provide good protection from the disease.\n\n • Beneficial microorganisms containing products, such as Serenade and Sonata, can reduce pepper leaf spot if used proactively'
 };
 
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     activeBgColor: [Color(0xff4FC8DA)],
                     initialLabelIndex: 0,
                     totalSwitches: 3,
-                    labels: ['Potato', 'Pepper', 'Tomato'],
+                    labels: ['Potato', 'Tomato', 'Pepper'],
                     onToggle: (index) {
                       indexx = index;
                       print(indexx);
@@ -134,11 +134,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           classRes = response1.data['class'];
                           confi = response1.data['confidence'];
+                          print("---" + classRes + "---");
                           setState(() {
                             CURRENT_STATE = ScreenState.RESULT;
                           });
                         } catch (e) {
-                          CURRENT_STATE = ScreenState.FAILED;
+                          if (e is DioError) {
+                            CURRENT_STATE = ScreenState.FAILED;
+                            setState(() {});
+                          }
                         }
                         if (classRes == "Keshav") {
                           CURRENT_STATE = ScreenState.FAILED;
@@ -182,14 +186,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           dynamic response1 = await dio
                               .post(Classifier[indexx], data: {"url": img_url});
                           print(response1.data);
-
                           classRes = response1.data['class'];
+                          print("---" + classRes + "---");
                           confi = response1.data['confidence'];
                           setState(() {
                             CURRENT_STATE = ScreenState.RESULT;
                           });
                         } catch (e) {
-                          CURRENT_STATE = ScreenState.FAILED;
+                          print(e);
+                          if (e is DioError) {
+                            CURRENT_STATE = ScreenState.FAILED;
+                            setState(() {});
+                          }
                         }
                         if (classRes == "Keshav") {
                           CURRENT_STATE = ScreenState.FAILED;
