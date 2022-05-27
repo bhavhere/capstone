@@ -3,11 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'home.dart';
 import 'constant.dart';
+import 'package:dio/dio.dart';
 
 // @dart=2.9
 void main() {
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -23,6 +25,18 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+// int pingServer async ()
+// {
+//   try {
+//     var dio = Dio();
+//     dynamic response1 = await dio
+//         .post('https://capstoneplant.herokuapp.com/predict_potato/', data: {"url": 'https://www.digitrac.in/pub/media/magefan_blog/Late_blight_of_potato.jpg'});
+//     print(response1.data);
+//   } catch (e) {
+//     print(e);
+//   }
+//   return 1;
+// }
 
 class Welcome_Page extends StatefulWidget {
   @override
@@ -30,6 +44,15 @@ class Welcome_Page extends StatefulWidget {
 }
 
 class _Welcome_PageState extends State<Welcome_Page> {
+
+
+
+  // @override
+  // void initState() async {
+  //   print("i m in it");
+  //   pingServer();
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

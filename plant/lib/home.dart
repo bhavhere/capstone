@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:plant/constant.dart';
 import 'package:lottie/lottie.dart';
+import 'package:plant/main.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:circular_menu/circular_menu.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
@@ -11,23 +13,25 @@ import 'package:google_fonts/google_fonts.dart';
 
 var message = {
   'Healthy': 'This plant is healthy',
-  'Early Blight':
+  'Early Blight1':
       '• Use fungicide sprays based on mandipropamid,chlorothalonil, fluazinam, mancozeb to combat late blight\n\n• Water in the early morning hours, or use soaker hoses, to give plants time to dry out during the day — avoid overhead irrigation.',
-  'Late Blight':
-      '• Thoroughly spray the plant (bottoms of leaves also) with Bonide Liquid Copper Fungicide concentrate or Bonide Tomato & Vegetable.\n\n• A day after treatment, remove the lower branches with sharp razor blade knife. Clean your knife with rubbing alcohol before trimming the next plant to prevent the spread of the disease.\n • Do not spray pesticides, fungicides, fertilizers or herbicides when it’s in the high 80’s or 90; you can damage your plants. Water your plants the day before spraying, hydration is important!',
-  'Early Blight':
+  'Late Blight1':
+      '• Thoroughly spray the plant (bottoms of leaves also) with Bonide Liquid Copper Fungicide concentrate or Bonide Tomato & Vegetable.\n\n• A day after treatment, remove the lower branches with sharp razor blade knife. Clean your knife with rubbing alcohol before trimming the next plant to prevent the spread of the disease.\n\n • Do not spray pesticides, fungicides, fertilizers or herbicides when it’s in the high 80’s or 90; you can damage your plants. Water your plants the day before spraying, hydration is important!',
+  'Early Blight0':
       '• Fungicides with protectant and curative properties are used against early blight on potato. Protectant fungicides such as mancozeb and chlorothalonil areused as the foundation of most early blight management programs \n\n • These fungicides must be reapplied every 7-10 days to provide protection of new growth as well as to counter the effects of weathering which progressively removes the chemical from the leaf surface.',
-  'Late Blight':
+  'Late Blight0':
       '• Use systemic fungicides, such as dimethomorph, cymoxanil, fluopicolide and propamacarb. Continue fungicide applications at 7- to 10-day intervals as conditions require. Shorter intervals may be needed under cool, rainy conditions.\n\n • Late blight is controlled by eliminating cull piles and volunteer potatoes, using proper harvesting and storage practices, and applying fungicides when necessary.',
-  'Bacterial Spot':
-      '• Copper sprays can be used to control bacterial leaf spot, but they are not as effective when used alone on a continuous basis. Thus, combining these sprays with a plant resistance inducer, such as Regalia or Actigard, can provide good protection from the disease.\n\n • Beneficial microorganisms containing products, such as Serenade and Sonata, can reduce pepper leaf spot if used proactively'
+  'Bacterial Spot2':
+      '• Copper sprays can be used to control bacterial leaf spot, but they are not as effective when used alone on a continuous basis. Thus, combining these sprays with a plant resistance inducer, such as Regalia or Actigard, can provide good protection from the disease.\n\n • Beneficial microorganisms containing products, such as Serenade and Sonata, can reduce pepper leaf spot if used proactively',
+  "Server Error" : 'Server is not responding'
 };
 
 enum ScreenState { SHOW_MAIN_SCREEN, LOADING, RESULT, FAILED }
 int indexx = 0;
 String classRes = "Keshav";
-double confi;
-List img = ['https://ibb.co/93YdkGf'];
+String title = "Server Error";
+double confi = 100;
+
 List Classifier = [
   'https://capstoneplant.herokuapp.com/predict_potato/',
   'https://capstoneplant.herokuapp.com/predict_tomato/',
@@ -133,7 +137,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           print(response1.data);
 
                           classRes = response1.data['class'];
-                          confi = response1.data['confidence'];
+                          classRes != null ? title = classRes : null;
+                          classRes += indexx.toString();
+                          response1.data['confidence'] != null ?confi = response1.data['confidence']:null;
                           print("---" + classRes + "---");
                           setState(() {
                             CURRENT_STATE = ScreenState.RESULT;
@@ -144,10 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             setState(() {});
                           }
                         }
-                        if (classRes == "Keshav") {
-                          CURRENT_STATE = ScreenState.FAILED;
-                          setState(() {});
-                        }
+                        // if (classRes == "Keshav") {
+                        //   CURRENT_STATE = ScreenState.FAILED;
+                        //   setState(() {});
+                        // }
                       },
                       child: Container(
                         child: Center(child: Text("Camera")),
@@ -187,19 +193,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               .post(Classifier[indexx], data: {"url": img_url});
                           print(response1.data);
                           classRes = response1.data['class'];
-                          print("---" + classRes + "---");
+                          title = classRes;
+                          classRes += indexx.toString();
                           confi = response1.data['confidence'];
                           setState(() {
                             CURRENT_STATE = ScreenState.RESULT;
                           });
                         } catch (e) {
                           print(e);
-                          if (e is DioError) {
-                            CURRENT_STATE = ScreenState.FAILED;
-                            setState(() {});
-                          }
+                          CURRENT_STATE = ScreenState.FAILED;
+                          setState(() {});
                         }
                         if (classRes == "Keshav") {
+                          // classRes = "Healthy";
+                          // Random r = new Random();
+                          // double rn = r.nextDouble() * 100;
+                          // confi = rn;
                           CURRENT_STATE = ScreenState.FAILED;
                           setState(() {});
                         }
@@ -261,7 +270,7 @@ Result(context) {
                 ),
                 Container(),
                 Text(
-                  classRes,
+                  title,
                   style: GoogleFonts.mPlusRounded1c(fontSize: 30),
                 ),
                 Text(
@@ -284,11 +293,15 @@ Result(context) {
                     ),
                   ),
                 ),
-                Expanded(child: Text('')),
+                SizedBox(height: 15),
                 GestureDetector(
                   onTap: () {
                     CURRENT_STATE = ScreenState.SHOW_MAIN_SCREEN;
-                    Navigator.pop(context);
+                    indexx = 0;
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Welcome_Page()),
+                    );
                   },
                   child: Container(
                       child: Icon(Icons.home),
