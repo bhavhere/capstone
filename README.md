@@ -6,3 +6,12 @@ To achieve this goal, a pre-trained convolutional neural network was developed a
 #### Database credit: https://www.kaggle.com/datasets/arjuntejaswi/plant-village
 #### FastAPI heroku server: https://capstoneplant.herokuapp.com/docs/
 #### Youtube link for demo: https://www.youtube.com/watch?v=L5IySnJq6So&feature=youtu.be
+
+## Plantas App interface
+
+![ui](https://user-images.githubusercontent.com/43774014/177781539-7c58f2d3-25ed-4023-b2d8-c6fc40d99619.jpg)
+
+## System architechture
+
+![system architecture](https://user-images.githubusercontent.com/43774014/177781640-1f0ee8e4-0df8-437e-9497-e4ee05e05b2e.jpeg)
+
