@@ -1,5 +1,4 @@
 # plantas-a flutter app for detection of fungal and algae diseases in plant leaves
-Here’s an improved version of the description with more clarity, structure, and refined language:
 
 ---
 
@@ -37,9 +36,9 @@ This plant disease detection software is an innovative, user-friendly solution t
 ---
 
 </b>
-#### Database credit: https://www.kaggle.com/datasets/arjuntejaswi/plant-village
-#### FastAPI heroku server: https://capstoneplant.herokuapp.com/docs/
-#### Youtube link for demo: https://www.youtube.com/watch?v=L5IySnJq6So&feature=youtu.be
+Database credit: https://www.kaggle.com/datasets/arjuntejaswi/plant-village<br/>
+FastAPI heroku server: https://capstoneplant.herokuapp.com/docs/<br/>
+Youtube link for demo: https://www.youtube.com/watch?v=L5IySnJq6So&feature=youtu.be<br/>
 
 ## Plantas App interface
 
