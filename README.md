@@ -1,7 +1,5 @@
 # plantas-a flutter app for detection of fungal and algae diseases in plant leaves
 
----
-
 **Project Overview:**
 
 The primary objective of this project was to develop an intelligent system capable of recognizing various crop diseases and recommending appropriate pesticides based on real-time data. The solution leverages a **pre-trained convolutional neural network (CNN)**, which achieves an impressive accuracy of approximately **97%** in disease detection.
